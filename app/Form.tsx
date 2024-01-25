@@ -42,7 +42,7 @@ export default function Form() {
             return;
         }
 
-        if (message.toString().length > 100) {
+        if (message.toString().trim().length > 100) {
             toast.error("Message cannot be longer than 100 characters");
             return;
         }

@@ -20,7 +20,7 @@ export default async function CreateMessage(formData: FormData) {
         const ip = await getIPAddress();
         const [rows, fields] = await conn.query(
             "INSERT INTO message (msg_text, sender_ip, date_created, color) VALUES (?, ?,  NOW(), ?)",
-            [formData.get("message"), ip, formData.get("messageColor")?.slice(1)]
+            [formData.get("message")?.toString().trim(), ip, formData.get("messageColor")?.slice(1)]
         );
 
         revalidatePath('/')
