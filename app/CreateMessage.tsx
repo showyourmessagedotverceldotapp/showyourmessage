@@ -15,6 +15,43 @@ export default async function CreateMessage(formData: FormData) {
       database: process.env.DB_NAME 
     });
 
+    // Validate input
+    const message = formData.get("message");
+
+    if (!message) {
+        return {
+            error: "Message cannot be empty",
+        }
+    }
+
+    if (message.toString().trim().length > 100) {
+        return {
+            error: "Message cannot be longer than 100 characters",
+        }
+    }
+
+    // Checek if message contains any letters
+    if (!message.toString().match(/[a-z]/i)) {
+        return {
+            error: "Message must contain letters",
+        }
+    }
+
+    // Check if color is valid
+    const messageColor = formData.get("messageColor");
+
+    if (!messageColor) {
+        return {
+            error: "Message color cannot be empty",
+        }
+    }
+
+    if (!/^#[0-9A-F]{6}$/i.test(messageColor.toString())) {
+        return {
+            error: "Message color must be a valid hex color",
+        }
+    }
+
     try {
         conn.connect();
         const ip = await getIPAddress();
