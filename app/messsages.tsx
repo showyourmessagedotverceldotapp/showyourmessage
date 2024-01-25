@@ -36,8 +36,8 @@ export default async function Messages() {
                     <div key={index} className="flex flex-col bg-white p-2 border-2 min-w-[10vw] h-fit flex-grow" style={{borderColor: `#${message.color}` }}>
                         <p className="text-xl font-bold">{message.msg_text}</p>
                         {/* <p className="text-sm font-bold">{message.date_created.toString()}</p> */}
-                        {/* Render as shortened date xx-xx-xxxx */}
-                        <p className="text-sm font-bold">{message.date_created.toString().slice(0, 10)}</p>
+                        {/* Render as shortened date xx-xx-xxxx xx:xx */}
+                        <p className="text-sm font-bold">{message.date_created.toString().slice(0, 16)}</p>
                         <p>- Anonymous</p>
                     </div>
                 )
