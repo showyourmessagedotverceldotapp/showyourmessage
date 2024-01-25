@@ -48,8 +48,8 @@ export default function Form() {
         }
 
         // Checek if message contains any letters
-        if (message.toString().match(/[a-z]/i)) {
-            toast.error("Message cannot contain any letters");
+        if (!message.toString().match(/[a-z]/i)) {
+            toast.error("Message must contain letters");
             return;
         }
 
