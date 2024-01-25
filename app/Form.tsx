@@ -17,7 +17,7 @@ export default function Form() {
         if (colorInput) {
             colorInput.value = `#${randomColor}`;
         }
-        
+
     }, [])
     async function handleMessage(formData: FormData) {
         // check if lastMessageTime in localStorage is more than 10 seconds ago
@@ -104,7 +104,7 @@ export default function Form() {
             </p>
             <p>
                 Check out the code:
-                (github link hier)
+                <a href="https://github.com/showyourmessagedotverceldotapp/showyourmessage" target="_blank">Our GitHub Repo</a>
             </p>
         </form>
     );
