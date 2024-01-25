@@ -1,4 +1,5 @@
 import { createConnection, RowDataPacket, FieldPacket } from "mysql2";
+import { format } from "date-fns";
 
 interface Message {
     msg_text: string;
@@ -36,8 +37,8 @@ export default async function Messages() {
                     <div key={index} className="flex flex-col bg-white p-2 border-2 min-w-[10vw] h-fit flex-grow" style={{borderColor: `#${message.color}` }}>
                         <p className="text-xl font-bold">{message.msg_text}</p>
                         {/* <p className="text-sm font-bold">{message.date_created.toString()}</p> */}
-                        {/* Render as shortened date xx-xx-xxxx xx:xx */}
-                        <p className="text-sm font-bold">{message.date_created.toString().slice(0, 16)}</p>
+                        {/* Render as shortened date xx-xx-xxxx and show the time as well time is formatted as 2024-01-25 21:47:50 */}
+                        <p className="text-sm font-bold">{format(new Date(message.date_created), 'MM-dd-yyyy HH:mm')}</p>
                         <p>- Anonymous</p>
                     </div>
                 )
