@@ -47,6 +47,12 @@ export default function Form() {
             return;
         }
 
+        // Checek if message contains any letters
+        if (message.toString().match(/[a-z]/i)) {
+            toast.error("Message cannot contain any letters");
+            return;
+        }
+
         // Check if color is valid
         const messageColor = formData.get("messageColor");
 
