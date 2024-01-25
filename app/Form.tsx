@@ -109,8 +109,8 @@ export default function Form() {
                 message, we suggest taking that up with god.
             </p>
             <p>
-                Check out the code:
-                <a href="https://github.com/showyourmessagedotverceldotapp/showyourmessage" target="_blank">Our GitHub Repo</a>
+                Check out the code: 
+                <a className="text-blue-500 hover:underline" href="https://github.com/showyourmessagedotverceldotapp/showyourmessage" target="_blank">Our GitHub Repo</a>
             </p>
         </form>
     );
