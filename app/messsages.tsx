@@ -19,7 +19,7 @@ export default async function Messages() {
     try {
         conn.connect();
         const [rows, fields]: [RowDataPacket[], FieldPacket[]] = await conn.promise().query(
-            "SELECT * FROM message ORDER BY date_created DESC"
+            "SELECT * FROM message ORDER BY date_created DESC LIMIT 500"
         );
         messages = rows as Message[];
     }

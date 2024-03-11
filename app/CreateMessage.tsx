@@ -1,12 +1,10 @@
 'use server';
 import { Connection } from "mysql2";
-import { createConnection } from "mysql2/promise";
+import { RowDataPacket, createConnection } from "mysql2/promise";
 import { getIPAddress } from "./getIP";
 import { revalidatePath } from "next/cache";
 
 export default async function CreateMessage(formData: FormData) {
-
-
     // Create connection
     const conn = await createConnection({ 
       host: process.env.DB_HOST,
@@ -55,7 +53,26 @@ export default async function CreateMessage(formData: FormData) {
     try {
         conn.connect();
         const ip = await getIPAddress();
-        const [rows, fields] = await conn.query(
+
+        // check lastposts table for last post from ip
+        const [rows, fields]: [RowDataPacket[], any] = await conn.query(
+            "SELECT * FROM lastposts WHERE ip = ? AND last_post_time > DATE_SUB(NOW(), INTERVAL 10 SECOND)",
+            [ip]
+        );
+
+        if (rows.length > 0) {
+            return {
+                error: "You can only send one message every 10 seconds",
+            }
+        }
+
+        // insert into lastposts
+        await conn.query(
+            "INSERT INTO lastposts (ip, last_post_time) VALUES (?, NOW())",
+            [ip]
+        );
+
+        const [insertResult] = await conn.query(
             "INSERT INTO message (msg_text, sender_ip, date_created, color) VALUES (?, ?,  NOW(), ?)",
             [formData.get("message")?.toString().trim(), ip, formData.get("messageColor")?.slice(1)]
         );

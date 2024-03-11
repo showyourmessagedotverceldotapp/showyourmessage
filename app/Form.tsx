@@ -87,7 +87,7 @@ export default function Form() {
                 name="message"
                 id="message"
                 required
-                className="outline-none border-2 border-gray-300 shadow-sm focus:border-blue-300 transition-all duration-75 rounded-md"
+                className="transition-all duration-75 border-2 border-gray-300 rounded-md shadow-sm outline-none focus:border-blue-300"
             />
             <label htmlFor="messageColor">Pick a color for your message!</label>
             <input
@@ -95,7 +95,7 @@ export default function Form() {
                 name="messageColor"
                 id="messageColor"
                 required
-                className="w-full h-10 outline-none border-gray-300 shadow-sm focus:border-blue-300 transition-all duration-75 rounded-md border-none"
+                className="w-full h-10 transition-all duration-75 border-gray-300 border-none rounded-md shadow-sm outline-none focus:border-blue-300"
             />
             <SubmitBtn />
             <p>You will remain fully anonymous to other users</p>
