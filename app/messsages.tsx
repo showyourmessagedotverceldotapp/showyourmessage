@@ -1,5 +1,6 @@
 import { createConnection, RowDataPacket, FieldPacket } from "mysql2";
 import { format } from "date-fns";
+import Image from "next/image";
 
 interface Message {
     msg_text: string;
@@ -31,18 +32,47 @@ export default async function Messages() {
     }
 
     return (
-        <div className="flex flex-row flex-wrap">
+        <div className="flex flex-row flex-wrap justify-stretch items-stretch">
             {messages.map((message, index) => {
                 return (
-                    <div key={index} className="flex flex-col bg-white p-2 border-2 min-w-[10vw] h-fit flex-grow" style={{borderColor: `#${message.color}` }}>
-                        <p className="text-xl font-bold">{message.msg_text}</p>
-                        {/* <p className="text-sm font-bold">{message.date_created.toString()}</p> */}
-                        {/* Render as shortened date xx-xx-xxxx and show the time as well time is formatted as 2024-01-25 21:47:50 */}
-                        <p className="text-sm font-bold">{format(new Date(message.date_created), 'MM-dd-yyyy HH:mm')}</p>
-                        <p>- Anonymous</p>
-                    </div>
+                    <Message message={message} index={index} />
                 )
             })}
         </div>
     ) 
 }
+
+function Message({message, index}: {message: Message, index: number}) {
+    const hasURL = (text: string) => {
+        return text.match(/https?:\/\/[^\s]+/g);
+    }
+
+    const splitUrl = (text: string) => { 
+        const startIndex: number = text.indexOf("http");
+
+        const endIndex: number = text.indexOf(" ", startIndex);
+
+        if (endIndex === -1) {
+            return text.substring(startIndex);
+        }
+    }
+
+
+    return (
+        <div key={index} className="flex flex-col bg-white p-2 border-2 min-w-[10vw] max-w-[50%] text-ellipsis overflow-hidden w-fit flex-grow h-[100%]" style={{borderColor: `#${message.color}` }}>
+            <p className="text-xl font-bold text-ellipsis">{message.msg_text}</p>
+            {hasURL(message.msg_text) && (
+                <Image src={splitUrl(message.msg_text)!}
+                loading="lazy"
+                height={100}
+                width={100} alt={message.msg_text}                />
+            )}
+            {!hasURL(message.msg_text) && (
+                <p className="text-sm text-ellipsis h-[100px] w-[100px]">{message.msg_text}</p>
+            )}
+
+            <p className="text-sm font-bold">{format(new Date(message.date_created), 'MM-dd-yyyy HH:mm')}</p>
+            <p>- Anonymous</p>
+        </div>
+    )
+} 

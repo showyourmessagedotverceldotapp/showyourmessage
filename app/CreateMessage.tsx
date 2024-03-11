@@ -22,7 +22,7 @@ export default async function CreateMessage(formData: FormData) {
         }
     }
 
-    if (message.toString().trim().length > 100) {
+    if (message.toString().trim().length > 200) {
         return {
             error: "Message cannot be longer than 100 characters",
         }
