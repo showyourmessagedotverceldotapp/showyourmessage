@@ -1,12 +1,12 @@
 'use server';
 import { Connection } from "mysql2";
-import { RowDataPacket, createConnection } from "mysql2/promise";
+import { RowDataPacket, createConnection, createPool } from "mysql2/promise";
 import { getIPAddress } from "./getIP";
 import { revalidatePath } from "next/cache";
 
 export default async function CreateMessage(formData: FormData) {
     // Create connection
-    const conn = await createConnection({ 
+    const conn = await createPool({ 
       host: process.env.DB_HOST,
       user: process.env.DB_USER,
       password: process.env.DB_PASS,
@@ -51,7 +51,6 @@ export default async function CreateMessage(formData: FormData) {
     }
 
     try {
-        conn.connect();
         const ip = await getIPAddress();
 
         // check lastposts table for last post from ip
